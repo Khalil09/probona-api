@@ -1,0 +1,10 @@
+{
+    "config_database": {
+        "host": "localhost",
+        "user": "probono",
+        "password": "12345678",
+        "database": "probono_db",
+        "port": "3306",
+        "connectionLimit": 5000
+    }
+}

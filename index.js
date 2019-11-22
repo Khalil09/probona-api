@@ -8,9 +8,7 @@ const app = express()
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require('helmet');
-
-const userServiceProxy = httpProxy('http://localhost:3001');
-const productsServiceProxy = httpProxy('http://localhost:3002');
+const client = require('./src/clients')
 
 app.use(logger('dev'));
 app.use(helmet());
@@ -31,13 +29,18 @@ function verifyJWT(req, res, next){
   });
 }
 
+// POST create client
+app.post('/clients', verifyJWT, (req, res, next) => {
+  client.create(req, res);
+})
+
 // Proxy request
 app.get('/users', verifyJWT, (req, res, next) => {
-  userServiceProxy(req, res, next);
+  res.status(200).send([{"id": 2, "name": "Umberto"}, {"id": 4, "name": "Luiz"}]);
 })
 
 app.get('/products', verifyJWT, (req, res, next) => {
-  productsServiceProxy(req, res, next);
+
 })
 
 app.post('/login', (req, res, next) => {
